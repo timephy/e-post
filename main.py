@@ -108,7 +108,7 @@ for filename in filenames_new:
         channels=SLACK_CHANNEL,
         title=path.name,
         file=str(path),
-        initial_comment="MOOOOOIN",
+        initial_comment="Neue Post!",
     )
 
 print("Done.", flush=True)
