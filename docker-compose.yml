@@ -5,7 +5,7 @@ services:
     volumes:
       - "./files/:/app/files"
     environment:
-      - USERNAME=eps-ga30672855@transfer.dp-ds.de
-      - PASSWORD=DBA6&EaROlDqjZ741
-      - SLACK_BOT_TOKEN=xoxb-3254669656390-4463233934242-lE54r7b6pCujnBKfPviSpqQR
-      - SLACK_CHANNEL=C037P9KR30A
+      - USERNAME=
+      - PASSWORD=
+      - SLACK_BOT_TOKEN=
+      - SLACK_CHANNEL=
