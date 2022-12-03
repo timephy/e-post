@@ -39,3 +39,11 @@ You can set up `cron` to run this tool periodically by running `crontab -e` and 
 Create a slack app and give it `files:read` and `files:write` permissions and include the `token` and `channel_id` in the environment variables.
 
 Lastly add the app to your slack workspace and add the bot/app to the channel in question.
+
+### Update
+
+To update to the latest version simple pull the newest docker image by running:
+
+```bash
+docker pull ghcr.io/timephy/e-post:main
+```
