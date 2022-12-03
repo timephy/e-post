@@ -23,6 +23,8 @@ PASSWORD = config.get("PASSWORD")
 SLACK_BOT_TOKEN = config.get("SLACK_BOT_TOKEN")
 SLACK_CHANNEL = config.get("SLACK_CHANNEL")
 
+REMOVE_REPORT = True
+
 if not USERNAME or not PASSWORD:
     print("Exiting because a required env var is not set (USERNAME, PASSWORD).", flush=True)
     print("Exiting.", flush=True)
@@ -79,8 +81,11 @@ for elem in elems:
         print(f'OLD file {filename!r} found', flush=True)
     else:
         print(f'NEW file {filename!r} found', flush=True)
-        elem.click()
-        filenames_new.append(filename)
+        if REMOVE_REPORT and filename.startswith("EPOSTSCAN_Tagesreport"):
+            print("Skip report.", flush=True)
+        else:
+            elem.click()
+            filenames_new.append(filename)
 
 if len(filenames_new) > 0:
     print("Sleeping 5s waiting for downloads to finish", flush=True)
