@@ -1,4 +1,4 @@
-FROM python:3.10.8-alpine
+FROM joyzoursky/python-chromedriver:3.9-alpine
 
 WORKDIR /app
 

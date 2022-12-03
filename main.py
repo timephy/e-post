@@ -6,23 +6,27 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from slack_sdk import WebClient
 
-from time import sleep
 import os
+from time import sleep
 from pathlib import Path
 
-# during dev load from file, after dev credentials will be env vars
-from dotenv import load_dotenv
-load_dotenv()
+# # Environment variables
+from dotenv import dotenv_values
+config = {
+    **dotenv_values(".env"),
+    **dotenv_values(".env.secret"),
+    **os.environ,
+}
 
-USERNAME = os.environ.get("USERNAME")
-PASSWORD = os.environ.get("PASSWORD")
-SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN")
-SLACK_CHANNEL = os.environ.get("SLACK_CHANNEL")
+USERNAME = config.get("USERNAME")
+PASSWORD = config.get("PASSWORD")
+SLACK_BOT_TOKEN = config.get("SLACK_BOT_TOKEN")
+SLACK_CHANNEL = config.get("SLACK_CHANNEL")
 
-if USERNAME is None or PASSWORD is None or SLACK_BOT_TOKEN is None:
-    print("Exiting because a required env var is not set.")
+if not USERNAME or not PASSWORD:
+    print("Exiting because a required env var is not set (USERNAME, PASSWORD).")
+    print("Exiting.")
     exit()
-
 
 # # File store
 store = Path('files')
@@ -31,7 +35,8 @@ print(f"{store_dir = }")
 
 # # Setup browser
 options = webdriver.ChromeOptions()
-# options.add_argument("download.default_directory=/Users/timguggenmos/code/e-post/files")
+options.add_argument('--headless')
+options.add_argument('window-size=1920x1080')
 prefs = {'download.default_directory': str(store_dir)}
 options.add_experimental_option('prefs', prefs)
 
@@ -75,23 +80,33 @@ for elem in elems:
         elem.click()
         filenames_new.append(filename)
 
-print("Sleeping 5s waiting for downloads to finish")
-sleep(5)
+if len(filenames_new) > 0:
+    print("Sleeping 5s waiting for downloads to finish")
+    sleep(5)
+    print(f"These are the new files: {filenames_new}")
+else:
+    print("No new files.")
+    print("Exiting.")
+    exit()
 
-print(f"These are the new files: {filenames_new}")
 browser.close()
 
 # # Send files to Slack
+if not SLACK_BOT_TOKEN or not SLACK_CHANNEL:
+    print("Not sending Slack message because a required env var is not set (SLACK_BOT_TOKEN, SLACK_CHANNEL).")
+    print("Exiting.")
+    exit()
+
 client = WebClient(SLACK_BOT_TOKEN)
 client.auth_test()
 
 for filename in filenames_new:
     path = store.joinpath(filename)
-    upload_text_file = client.files_upload(
+    upload_text_file = client.files_upload_v2(
         channels=SLACK_CHANNEL,
-        title=f"File: {path}",
+        title=path.name,
         file=str(path),
-        initial_comment="Here is the file:",
+        initial_comment="MOOOOOIN",
     )
 
 print("Done.")
