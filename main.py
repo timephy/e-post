@@ -24,14 +24,14 @@ SLACK_BOT_TOKEN = config.get("SLACK_BOT_TOKEN")
 SLACK_CHANNEL = config.get("SLACK_CHANNEL")
 
 if not USERNAME or not PASSWORD:
-    print("Exiting because a required env var is not set (USERNAME, PASSWORD).")
-    print("Exiting.")
+    print("Exiting because a required env var is not set (USERNAME, PASSWORD).", flush=True)
+    print("Exiting.", flush=True)
     exit()
 
 # # File store
 store = Path('files')
 store_dir = store.absolute()
-print(f"{store_dir = }")
+print(f"{store_dir = }", flush=True)
 
 # # Setup browser
 options = webdriver.ChromeOptions()
@@ -72,31 +72,31 @@ sleep(1)
 # find/download files
 filenames_new = []
 elems = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.file-ico + div.file-name')))
-print(f'{len(elems)} files found on website')
+print(f'{len(elems)} files found on website', flush=True)
 for elem in elems:
     filename = elem.text
     if store_dir.joinpath(filename).exists():
-        print(f'OLD file {filename!r} found')
+        print(f'OLD file {filename!r} found', flush=True)
     else:
-        print(f'NEW file {filename!r} found')
+        print(f'NEW file {filename!r} found', flush=True)
         elem.click()
         filenames_new.append(filename)
 
 if len(filenames_new) > 0:
-    print("Sleeping 5s waiting for downloads to finish")
+    print("Sleeping 5s waiting for downloads to finish", flush=True)
     sleep(5)
-    print(f"These are the new files: {filenames_new}")
+    print(f"These are the new files: {filenames_new}", flush=True)
 else:
-    print("No new files.")
-    print("Exiting.")
+    print("No new files.", flush=True)
+    print("Exiting.", flush=True)
     exit()
 
 browser.close()
 
 # # Send files to Slack
 if not SLACK_BOT_TOKEN or not SLACK_CHANNEL:
-    print("Not sending Slack message because a required env var is not set (SLACK_BOT_TOKEN, SLACK_CHANNEL).")
-    print("Exiting.")
+    print("Not sending Slack message because a required env var is not set (SLACK_BOT_TOKEN, SLACK_CHANNEL).", flush=True)
+    print("Exiting.", flush=True)
     exit()
 
 client = WebClient(SLACK_BOT_TOKEN)
@@ -111,4 +111,4 @@ for filename in filenames_new:
         initial_comment="MOOOOOIN",
     )
 
-print("Done.")
+print("Done.", flush=True)
