@@ -9,7 +9,7 @@ It also allows to send all new files to a Slack channel automatically.
 This tool is available as a Docker image.
 
 Create a directory which will contain the configuration or data of `e-post`.
-For example create the directory `~/app`.
+For example create the directory `~/e-post`.
 
 Create a `docker-compose.yml` file containing the configuration.
 You need to configure the environment variables.
