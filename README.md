@@ -6,7 +6,7 @@ It also allows to send all new files to a Slack channel automatically.
 
 ## How to use
 
-This tool is available as a Docker image.
+This tool is available as a Docker image and therefore includes all dependencies like python packages, as well as `Chrome` and `chromedriver` for browser emulation.
 
 Create a directory which will contain the configuration or data of `e-post`.
 For example create the directory `~/e-post`.
@@ -36,14 +36,16 @@ You can set up `cron` to run this tool periodically by running `crontab -e` and 
 
 ### Slack App
 
-Create a slack app and give it `files:read` and `files:write` permissions and include the `token` and `channel_id` in the environment variables.
-
-Lastly add the app to your slack workspace and add the bot/app to the channel in question.
+Create a slack app and give it `files:read` and `files:write` permissions.
+Add the app to your slack workspace and add the bot/app to the channel in question.
+Lastly include the oauth `token` and `channel_id` in the environment variables.
 
 ### Update
 
-To update to the latest version simple pull the newest docker image by running:
+To update to the latest version simply pull the newest docker image by running:
 
 ```bash
 docker pull ghcr.io/timephy/e-post:main
 ```
+
+When `cron` schedules the next job, the new version will be executed.
