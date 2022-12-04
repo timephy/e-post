@@ -51,17 +51,26 @@ wait = WebDriverWait(browser, 10)
 # ## Login page
 browser.get("https://transfer.dp-ds.de/ThinClient/WTM/public/index.html#/login")
 
+wait.until(EC.url_matches('https://transfer.dp-ds.de/ThinClient/WTM/public/index.html#/login'))
+
+# wait for buttons to render at corrent location
+sleep(1)
+
 elem = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input#inputUsername')))
 elem.send_keys(USERNAME)
+sleep(.5)
 
 elem = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'input#password')))
 elem.send_keys(PASSWORD)
+sleep(.5)
 
 elem = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button#signIn')))
 elem.click()
+sleep(.5)
 
 # ## Main page
 wait.until(EC.url_matches('https://transfer.dp-ds.de/ThinClient/WTM/public/index.html#/main'))
+sleep(1)
 
 # expand directories
 elem_expansion = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.fa-chevron-right')))
