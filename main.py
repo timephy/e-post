@@ -96,8 +96,8 @@ for elem in elems:
             filenames_new.append(filename)
 
 if len(filenames_new) > 0:
-    print("Sleeping 5s waiting for downloads to finish", flush=True)
-    sleep(5)
+    print("Sleeping 15s waiting for downloads to finish", flush=True)
+    sleep(15)
     print(f"These are the new files: {filenames_new}", flush=True)
 else:
     print("No new files.", flush=True)
