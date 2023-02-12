@@ -48,9 +48,9 @@ wait = WebDriverWait(browser, 10)
 
 # # Crawl
 # ## Login page
-browser.get("https://transfer.dp-ds.de/ThinClient/WTM/public/index.html#/login")
+browser.get("https://webtransfer.dp-ds.de/ThinClient/WTM/public/index.html#/login")
 
-wait.until(EC.url_matches('https://transfer.dp-ds.de/ThinClient/WTM/public/index.html#/login'))
+wait.until(EC.url_matches('https://webtransfer.dp-ds.de/ThinClient/WTM/public/index.html#/login'))
 
 # wait for buttons to render at corrent location
 sleep(1)
@@ -68,7 +68,7 @@ elem.click()
 sleep(.5)
 
 # ## Main page
-wait.until(EC.url_matches('https://transfer.dp-ds.de/ThinClient/WTM/public/index.html#/main'))
+wait.until(EC.url_matches('https://webtransfer.dp-ds.de/ThinClient/WTM/public/index.html#/main'))
 sleep(1)
 
 # expand directories
