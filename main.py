@@ -117,6 +117,7 @@ client.auth_test()
 
 for filename in filenames_new:
     path = store.joinpath(filename)
+    print(f'Uploading file {path} to Slack...')
     upload_text_file = client.files_upload_v2(
         channels=SLACK_CHANNEL,
         title=path.name,
